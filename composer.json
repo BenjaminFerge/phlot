@@ -1,0 +1,18 @@
+{
+    "name": "benjaminferge/xchart",
+    "description": "Charting library",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Benjámin J. Ferge",
+            "email": "benjamin.ferge17@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "XChart\\": "src/"
+        }
+    }
+}

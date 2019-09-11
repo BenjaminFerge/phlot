@@ -14,5 +14,11 @@
         "psr-4": {
             "XChart\\": "src/"
         }
+    },
+    "config": {
+        "process-timeout": 0
+    },
+    "scripts": {
+        "examples": "php -S localhost:8080 -t examples"
     }
 }

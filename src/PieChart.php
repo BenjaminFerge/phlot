@@ -21,13 +21,22 @@ class PieChart extends Chart
         for ($i = 0; $i < count($data); $i++) {
             $p = $data[$i];
             $val = $p / $total;
-            $color = (($i % 2 == 0) ? $black : $white);
-            $color = imagecolorallocate(
-                $img,
-                $this->defaultElemColor->getRed(),
-                $this->defaultElemColor->getGreen(),
-                $this->defaultElemColor->getBlue()
-            );
+            if ($this->series->hasColors()) {
+                $_color = $this->series->getColors()[$i];
+                $color = imagecolorallocate(
+                    $img,
+                    $_color->getRed(),
+                    $_color->getGreen(),
+                    $_color->getBlue()
+                );
+            } else {
+                $color = imagecolorallocate(
+                    $img,
+                    $this->defaultElemColor->getRed(),
+                    $this->defaultElemColor->getGreen(),
+                    $this->defaultElemColor->getBlue()
+                );
+            }
             $endAngle = 360 * $val + $startAngle;
             imagefilledarc(
                 $img,

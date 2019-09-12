@@ -20,7 +20,7 @@ class ChartArea
         $this->height = $height;
         $this->bgColor = new Color(255, 255, 255);
     }
-    
+
     public function addChart(Chart $chart, int $startX, int $startY)
     {
         $this->charts[] = compact('chart', 'startX', 'startY');
@@ -31,9 +31,7 @@ class ChartArea
         $bg = imagecolor($this->img, $this->bgColor);
         imagefill($this->img, 0, 0, $bg);
         if ($this->title) {
-            $titleFont = $this->title->getFont();
-            $imgTitleColor = imagecolor($this->img, $titleFont->getColor());
-            whitespaces_imagestring($this->img, $titleFont->getFontFamily(), 0, 0, $this->title->getText(), $imgTitleColor);
+            $this->title->draw($this->img);
         }
         for ($i = 0; $i < count($this->charts); $i++) {
             extract($this->charts[$i]);

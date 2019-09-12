@@ -13,6 +13,13 @@ class Title
         $this->font = $font;
     }
 
+    public function draw($img)
+    {
+        $titleFont = $this->font;
+        $imgTitleColor = imagecolor($img, $titleFont->getColor());
+        whitespaces_imagestring($img, $titleFont->getFontFamily(), 0, 0, $this->text, $imgTitleColor);
+    }
+
     /**
      * Get the value of text
      */

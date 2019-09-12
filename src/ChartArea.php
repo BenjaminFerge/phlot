@@ -27,11 +27,7 @@ class ChartArea
 
     public function draw(): void
     {
-        $bg = imagecolorallocate($this->img,
-            $this->bgColor->getRed(),
-            $this->bgColor->getGreen(),
-            $this->bgColor->getBlue()
-        );
+        $bg = imagecolor($this->img, $this->bgColor);
         imagefill($this->img, 0, 0, $bg);
         for ($i = 0; $i < count($this->charts); $i++) {
             extract($this->charts[$i]);

@@ -17,6 +17,6 @@ $series->setColors([
 $chart = new PieChart($series, 300, 300);
 $chartArea = new ChartArea(300, 300);
 $chartArea->addChart($chart, 0, 0);
-$color = new Color(100, 100, 240);
+$color = new Color(100, 100, 240, 100);
 $chartArea->setBackgroundColor($color);
 echo $chartArea;

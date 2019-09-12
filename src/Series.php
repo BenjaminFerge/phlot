@@ -2,6 +2,8 @@
 
 namespace Phlot;
 
+use Phrism\Color;
+
 class Series
 {
     private $name;
@@ -46,7 +48,7 @@ class Series
      */
     public function setColors($colors)
     {
-        assert(count($this->data) === count($colors));
+        assert($this->getLength() === count($colors));
         $this->colors = $colors;
         return $this;
     }
@@ -54,5 +56,17 @@ class Series
     public function hasColors()
     {
         return count($this->colors) > 0;
+    }
+
+    public function getLength()
+    {
+        return count($this->data);
+    }
+
+    public function useRandomColors(bool $withAlpha = false)
+    {
+        for ($i = 0; $i < $this->getLength(); $i++) {
+            $this->colors[$i] = Color::random($withAlpha);
+        }
     }
 }

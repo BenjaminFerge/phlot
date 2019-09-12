@@ -7,13 +7,7 @@ use Phlot\Series;
 use Phrism\Color;
 
 $series = new Series('A', [3, 3, 3, 3, 5]);
-$series->setColors([
-    new Color(rand(0, 255), rand(0, 255), rand(0, 255)),
-    new Color(rand(0, 255), rand(0, 255), rand(0, 255)),
-    new Color(rand(0, 255), rand(0, 255), rand(0, 255)),
-    new Color(rand(0, 255), rand(0, 255), rand(0, 255)),
-    new Color(rand(0, 255), rand(0, 255), rand(0, 255)),
-]);
+$series->useRandomColors(false);
 $chart = new PieChart($series, 300, 300);
 $chartArea = new ChartArea(300, 300);
 $chartArea->addChart($chart, 0, 0);

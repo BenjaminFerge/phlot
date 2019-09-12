@@ -22,8 +22,37 @@ class PieChart extends Chart
             $p = $data[$i];
             $val = $p / $total;
             $color = (($i % 2 == 0) ? $black : $white);
+            $color = imagecolorallocate(
+                $img,
+                $this->defaultElemColor->getRed(),
+                $this->defaultElemColor->getGreen(),
+                $this->defaultElemColor->getBlue()
+            );
             $endAngle = 360 * $val + $startAngle;
-            imagefilledarc($img, $centerX, $centerY, $rx, $ry, $startAngle, $endAngle, $color, IMG_ARC_PIE);
+            imagefilledarc(
+                $img,
+                $centerX,
+                $centerY,
+                $rx,
+                $ry,
+                $startAngle,
+                $endAngle,
+                $color,
+                IMG_ARC_PIE
+            );
+
+            // Border of element
+            imagearc($img, $centerX, $centerY, $rx, $ry, $startAngle, $endAngle, $white);
+            $startRad = deg2rad($startAngle);
+            $endRad = deg2rad($endAngle);
+            $x1 = $rx * cos($startRad) + $centerX;
+            $y1 = $ry * sin($startRad) + $centerY;
+            $x2 = $rx * cos($endRad) + $centerX;
+            $y2 = $ry * sin($endRad) + $centerY;
+            imageline($img, $centerX, $centerY, $x1, $y1, $white);
+            imageline($img, $centerX, $centerY, $x2, $y2, $white);
+            //---------------------------—---------------------------—---------
+            
             $startAngle = $endAngle;
         }
     }

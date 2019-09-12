@@ -1,5 +1,5 @@
 {
-    "name": "benjaminferge/xchart",
+    "name": "benjaminferge/phlot",
     "description": "Charting library",
     "type": "library",
     "license": "MIT",
@@ -12,7 +12,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "XChart\\": "src/"
+            "Phlot\\": "src/"
         },
         "files": [
             "src/helpers.php"

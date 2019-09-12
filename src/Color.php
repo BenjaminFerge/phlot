@@ -1,6 +1,6 @@
 <?php
 
-namespace XChart;
+namespace Phlot;
 
 class Color
 {

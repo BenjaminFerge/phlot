@@ -1,9 +1,9 @@
 <?php
 require __DIR__.'/../vendor/autoload.php';
 
-use XChart\ChartArea;
-use XChart\PieChart;
-use XChart\Series;
+use Phlot\ChartArea;
+use Phlot\PieChart;
+use Phlot\Series;
 
 $series = new Series('A', [3, 3, 3, 3]);
 $chart = new PieChart($series, 300, 300);

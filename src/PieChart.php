@@ -24,7 +24,7 @@ class PieChart extends Chart
             $color = (($i % 2 == 0) ? $black : $white);
             $endAngle = 360 * $val + $startAngle;
             imagefilledarc($img, $centerX, $centerY, $rx, $ry, $startAngle, $endAngle, $color, IMG_ARC_PIE);
-            $startAngle += $endAngle;
+            $startAngle = $endAngle;
         }
     }
 }

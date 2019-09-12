@@ -32,7 +32,7 @@ class ChartArea
     public function toBase64()
     {
         $this->draw();
-        ob_start (); 
+        ob_start();
         \imagepng($this->img);
         $imgData = ob_get_clean();
         $imgBase64 = base64_encode($imgData);
@@ -42,8 +42,9 @@ class ChartArea
     public function toHTML(bool $return = false)
     {
         $img = "<img src='data:image/png;base64, {$this->toBase64()}' alt='picture' />";
-        if ($return)
+        if ($return) {
             return $img;
+        }
         echo $img;
     }
 

@@ -15,7 +15,7 @@ class Series
 
     /**
      * Get the value of name
-     */ 
+     */
     public function getName()
     {
         return $this->name;
@@ -23,7 +23,7 @@ class Series
 
     /**
      * Get the value of data
-     */ 
+     */
     public function getData()
     {
         return $this->data;

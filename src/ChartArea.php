@@ -8,6 +8,7 @@ class ChartArea
     private $width;
     private $height;
     private $img;
+    private $bgColor;
 
     public function __construct($width = 200, $height = 200)
     {
@@ -23,6 +24,8 @@ class ChartArea
 
     public function draw(): void
     {
+        $red = imagecolorallocate($this->img, 255, 0, 0);
+        imagefill($this->img, 0, 0, $red);
         for ($i = 0; $i < count($this->charts); $i++) {
             extract($this->charts[$i]);
             $chart->draw($i, $this->img, $startX, $startY);
@@ -63,5 +66,24 @@ class ChartArea
     public function getImage()
     {
         return $this->img;
+    }
+
+    /**
+     * Get the value of bgColor
+     */
+    public function getBackgroundColor()
+    {
+        return $this->bgColor;
+    }
+
+    /**
+     * Set the value of bgColor
+     *
+     * @return  self
+     */
+    public function setBackgroundColor($bgColor)
+    {
+        $this->bgColor = $bgColor;
+        return $this;
     }
 }

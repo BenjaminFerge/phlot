@@ -6,7 +6,7 @@ use XChart\PieChart;
 use XChart\Series;
 
 $series = new Series('A', [1, 2, 3, 4, 5]);
-$chart = new PieChart($series, 100, 100);
+$chart = new PieChart($series, 200, 200);
 $chartArea = new ChartArea();
 $chartArea->addChart($chart, 0, 0);
 echo $chartArea;

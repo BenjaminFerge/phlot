@@ -13,7 +13,10 @@
     "autoload": {
         "psr-4": {
             "XChart\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "config": {
         "process-timeout": 0

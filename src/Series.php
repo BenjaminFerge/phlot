@@ -69,4 +69,12 @@ class Series
             $this->colors[$i] = Color::random($withAlpha);
         }
     }
+
+    public function useRandomColorsWithAlpha(int $alpha)
+    {
+        assert($alpha >= 0 && $alpha <= 127);
+        for ($i = 0; $i < $this->getLength(); $i++) {
+            $this->colors[$i] = Color::randomWithAlpha($alpha);
+        }
+    }
 }

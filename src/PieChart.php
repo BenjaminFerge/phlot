@@ -23,19 +23,9 @@ class PieChart extends Chart
             $val = $p / $total;
             if ($this->series->hasColors()) {
                 $_color = $this->series->getColors()[$i];
-                $color = imagecolorallocate(
-                    $img,
-                    $_color->getRed(),
-                    $_color->getGreen(),
-                    $_color->getBlue()
-                );
+                $color = imagecolor($img, $_color);
             } else {
-                $color = imagecolorallocate(
-                    $img,
-                    $this->defaultElemColor->getRed(),
-                    $this->defaultElemColor->getGreen(),
-                    $this->defaultElemColor->getBlue()
-                );
+                $color = imagecolor($img, $this->defaultElemColor);
             }
             $endAngle = 360 * $val + $startAngle;
             imagefilledarc(

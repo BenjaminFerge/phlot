@@ -1,5 +1,7 @@
 <?php
 
+use Phrism\Color;
+
 function hexToRgba($hex)
 {
     $hex      = str_replace('#', '', $hex);
@@ -9,4 +11,12 @@ function hexToRgba($hex)
     $rgba['b'] = hexdec($length == 6 ? substr($hex, 4, 2) : ($length == 3 ? str_repeat(substr($hex, 2, 1), 2) : 0));
     $rgba['a'] = hexdec($length == 8 ? substr($hex, 6, 2) : 0);
     return $rgba;
+}
+
+function imagecolor($img, Color $color)
+{
+    if ($color->getAlpha()) {
+        return imagecolorallocatealpha($img, $color->getRed(), $color->getGreen(), $color->getBlue(), $color->getAlpha());
+    }
+    return imagecolorallocate($img, $color->getRed(), $color->getGreen(), $color->getBlue());
 }

@@ -11,6 +11,7 @@ class ChartArea
     private $height;
     private $img;
     private $bgColor;
+    private $title;
 
     public function __construct($width = 200, $height = 200)
     {
@@ -29,6 +30,11 @@ class ChartArea
     {
         $bg = imagecolor($this->img, $this->bgColor);
         imagefill($this->img, 0, 0, $bg);
+        if ($this->title) {
+            $titleFont = $this->title->getFont();
+            $imgTitleColor = imagecolor($this->img, $titleFont->getColor());
+            whitespaces_imagestring($this->img, $titleFont->getFontFamily(), 0, 0, $this->title->getText(), $imgTitleColor);
+        }
         for ($i = 0; $i < count($this->charts); $i++) {
             extract($this->charts[$i]);
             $chart->draw($i, $this->img, $startX, $startY);
@@ -87,6 +93,25 @@ class ChartArea
     public function setBackgroundColor(Color $bgColor)
     {
         $this->bgColor = $bgColor;
+        return $this;
+    }
+
+    /**
+     * Get the value of title
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set the value of title
+     *
+     * @return  self
+     */
+    public function setTitle(Title $title)
+    {
+        $this->title = $title;
         return $this;
     }
 }

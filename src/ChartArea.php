@@ -2,6 +2,8 @@
 
 namespace Phlot;
 
+use Phrism\Color;
+
 class ChartArea
 {
     private $charts = [];
@@ -15,6 +17,7 @@ class ChartArea
         $this->img = \imagecreate($width, $height);
         $this->width = $width;
         $this->height = $height;
+        $this->bgColor = new Color(255, 255, 255);
     }
     
     public function addChart(Chart $chart, int $startX, int $startY)
@@ -24,8 +27,12 @@ class ChartArea
 
     public function draw(): void
     {
-        $red = imagecolorallocate($this->img, 255, 0, 0);
-        imagefill($this->img, 0, 0, $red);
+        $bg = imagecolorallocate($this->img,
+            $this->bgColor->getRed(),
+            $this->bgColor->getGreen(),
+            $this->bgColor->getBlue()
+        );
+        imagefill($this->img, 0, 0, $bg);
         for ($i = 0; $i < count($this->charts); $i++) {
             extract($this->charts[$i]);
             $chart->draw($i, $this->img, $startX, $startY);
@@ -81,7 +88,7 @@ class ChartArea
      *
      * @return  self
      */
-    public function setBackgroundColor($bgColor)
+    public function setBackgroundColor(Color $bgColor)
     {
         $this->bgColor = $bgColor;
         return $this;

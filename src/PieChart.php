@@ -45,10 +45,11 @@ class PieChart extends Chart
             imagearc($img, $centerX, $centerY, $rx, $ry, $startAngle, $endAngle, $white);
             $startRad = deg2rad($startAngle);
             $endRad = deg2rad($endAngle);
-            $x1 = $rx * cos($startRad) + $centerX;
-            $y1 = $ry * sin($startRad) + $centerY;
-            $x2 = $rx * cos($endRad) + $centerX;
-            $y2 = $ry * sin($endRad) + $centerY;
+            $r = $rx / 2;
+            $x1 = $r * cos($startRad) + $centerX;
+            $y1 = $r * sin($startRad) + $centerY;
+            $x2 = $r * cos($endRad) + $centerX;
+            $y2 = $r * sin($endRad) + $centerY;
             imageline($img, $centerX, $centerY, $x1, $y1, $white);
             imageline($img, $centerX, $centerY, $x2, $y2, $white);
             //---------------------------—---------------------------—---------

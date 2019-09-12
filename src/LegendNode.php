@@ -26,6 +26,7 @@ class LegendNode
         imagefilledrectangle($img, $startX, $startY, $endX, $endY, imagecolor($img, $this->bgColor));
         imagerectangle($img, $startX, $startY, $endX, $endY, imagecolor($img, $this->borderColor));
         $fontColor = imagecolor($img, $this->font->getColor());
-        \imagestring($img, $this->font->getFontFamily(), $startX, $startY, $this->text, $fontColor);
+        $fontSize = $this->font->getSize();
+        imagettftext($img, $fontSize, 0, $startX, $startY + $fontSize, $fontColor, $this->font->getFontFile(), $this->text);
     }
 }

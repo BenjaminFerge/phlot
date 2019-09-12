@@ -6,31 +6,40 @@ use Phrism\Color;
 
 class Font
 {
-    protected $fontFamily;
+    protected $family;
+    protected $size;
+    protected $style;
     protected $color;
 
-    public function __construct($fontFamily, Color $color)
+    public function __construct($family, $size, $style, Color $color)
     {
-        $this->fontFamily = $fontFamily;
+        $this->family = $family;
+        $this->size = $size;
+        $this->style = $style;
         $this->color = $color;
     }
 
-    /**
-     * Get the value of fontFamily
-     */
-    public function getFontFamily()
+    public function getFontFile()
     {
-        return $this->fontFamily;
+        return $this->family . '-' . $this->style;
     }
 
     /**
-     * Set the value of fontFamily
+     * Get the value of family
+     */
+    public function getFamily()
+    {
+        return $this->family;
+    }
+
+    /**
+     * Set the value of family
      *
      * @return  self
      */
-    public function setFontFamily($fontFamily)
+    public function setFamily($family)
     {
-        $this->fontFamily = $fontFamily;
+        $this->family = $family;
 
         return $this;
     }
@@ -51,6 +60,46 @@ class Font
     public function setColor(Color $color)
     {
         $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of style
+     */
+    public function getStyle()
+    {
+        return $this->style;
+    }
+
+    /**
+     * Set the value of style
+     *
+     * @return  self
+     */
+    public function setStyle($style)
+    {
+        $this->style = $style;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of size
+     */
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    /**
+     * Set the value of size
+     *
+     * @return  self
+     */
+    public function setSize($size)
+    {
+        $this->size = $size;
 
         return $this;
     }

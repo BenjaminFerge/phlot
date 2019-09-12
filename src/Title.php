@@ -16,8 +16,10 @@ class Title
     public function draw($img)
     {
         $titleFont = $this->font;
-        $imgTitleColor = imagecolor($img, $titleFont->getColor());
-        whitespaces_imagestring($img, $titleFont->getFontFamily(), 0, 0, $this->text, $imgTitleColor);
+        $startX = 0;
+        $startY = 0;
+        $lineLength = 100; // TODO: calc
+        wrap_imagettftext($img, $this->font->getSize(), 0, $startX, $startY, $titleFont->getColor(), $this->font->getFontFile(), $this->text, $lineLength);
     }
 
     /**

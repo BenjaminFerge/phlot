@@ -15,6 +15,7 @@ class ChartArea
     private $displayLegend = true;
     private $legendPadding = 50;
     private $legendPosition = self::LEGEND_POSITION_RIGHT;
+    private $pre_gdfontpath;
     const LEGEND_POSITION_LEFT = 0;
     const LEGEND_POSITION_RIGHT = 1;
     const LEGEND_POSITION_UP = 2;
@@ -22,10 +23,17 @@ class ChartArea
 
     public function __construct($width = 200, $height = 200)
     {
+        $this->pre_gdfontpath = getenv('GDFONTPATH');
+        putenv('GDFONTPATH=' . realpath(__DIR__.'/../assets/fonts'));
         $this->img = \imagecreate($width, $height);
         $this->width = $width;
         $this->height = $height;
         $this->bgColor = new Color(255, 255, 255);
+    }
+
+    public function __destruct()
+    {
+        putenv('GDFONTPATH=' . $this->pre_gdfontpath);
     }
 
     public function displayLegend(bool $show)
@@ -87,7 +95,7 @@ class ChartArea
                         );
                         goto default_legend_position;
                 }
-                $legendFont = new Font(2, new Color(0, 0, 0));
+                $legendFont = new Font('OpenSans', 8, 'Regular', new Color(0, 0, 0));
                 $series = $chart->getSeries();
                 $legendNodes = array_map(function ($label, $color) use ($legendFont) {
                     return new LegendNode($label, $legendFont, $color, new Color(0, 0, 0));

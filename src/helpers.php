@@ -53,3 +53,21 @@ function whitespaces_imagestring($image, $font, $x, $y, $string, $color)
         }
     }
 }
+
+function wrap_imagettftext($image, $size, $angle, $x, $y, Color $color, $fontFile, $text, $lineLength, $lineHeight = 3)
+{
+    $lines = explode('|', wordwrap($text, $lineLength, '|'));
+    $_color = imagecolor($image, $color);
+    foreach ($lines as $line)
+    {
+        imagettftext($image, $size, $angle, $x, $y+$size, $_color, $fontFile, $line);
+        $y += $size * $lineHeight;
+    }
+}
+
+function gdstring_utf8($text)
+{
+    $text = mb_convert_encoding($text, "HTML-ENTITIES", "UTF-8");
+    $text = preg_replace('~^(&([a-zA-Z0-9]);)~', htmlentities('${1}'), $text);
+    return($text);
+}

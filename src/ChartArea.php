@@ -2,6 +2,7 @@
 
 namespace Phlot;
 
+use Phlot\Math\Vector2;
 use Phrism\Color;
 
 class ChartArea
@@ -46,46 +47,43 @@ class ChartArea
         $this->charts[] = $chart;
     }
 
-    public function draw(): void
+    public function draw($img, Vector2 $startv, Vector2 $sizev): void
     {
-        $imgW = imagesx($this->img);
-        $imgH = imagesy($this->img);
+        $imgW = imagesx($img);
+        $imgH = imagesy($img);
         $imgWCenter = $imgW / 2;
         $imgHCenter = $imgH / 2;
-        $bg = imagecolor($this->img, $this->bgColor);
-        imagefill($this->img, 0, 0, $bg);
+        $bg = imagecolor($img, $this->bgColor);
+        imagefill($img, 0, 0, $bg);
 
         if ($this->title) {
-            $this->title->draw($this->img);
+            $this->title->draw($img);
         }
         for ($i = 0; $i < count($this->charts); $i++) {
             $chart = $this->charts[$i];
-            $startX = 0;
-            $startY = 0;
+            $chartStartv = new Vector2(0, 0);
             if ($this->displayLegend) {
-                $legendStartX = $startX;
-                $legendStartY = $startY;
-                $legendW = 100;
-                $legendH = 100;
+                $legendStartv = Vector2::fromVector2($startv);
+                $legendSizev = new Vector2(100, 100);
                 switch ($this->legendPosition) {
                     case self::LEGEND_POSITION_RIGHT:
                         default_legend_position:
-                        $startX -= $this->legendPadding;
-                        $legendStartX += $this->legendPadding + $imgWCenter;
+                        $chartStartv->x -= $this->legendPadding;
+                        $legendStartv->x += $this->legendPadding + $imgWCenter;
                         break;
                     case self::LEGEND_POSITION_LEFT:
-                        $startX += $this->legendPadding;
-                        $legendStartX -= ($this->legendPadding - $imgWCenter + $legendW);
+                        $chartStartv->x += $this->legendPadding;
+                        $legendStartv->x -= ($this->legendPadding - $imgWCenter + $legendSizev->x);
                         break;
                     case self::LEGEND_POSITION_UP:
                         // TODO
-                        $startY += $this->legendPadding;
-                        $legendStartY -= $this->legendPadding;
+                        $chartStartv->y += $this->legendPadding;
+                        $legendStartv->y -= $this->legendPadding;
                         break;
                     case self::LEGEND_POSITION_DOWN:
                         // TODO
-                        $startY -= $this->legendPadding;
-                        $legendStartY += $this->legendPadding;
+                        $chartStartv->y -= $this->legendPadding;
+                        $legendStartv->y += $this->legendPadding;
                         break;
                     default:
                         trigger_error(
@@ -102,17 +100,18 @@ class ChartArea
                 }, $series->getLabels(), $series->getColors());
 
                 $legend = new Legend($legendNodes, $legendFont);
-                $legend->draw($this->img, $legendStartX, $legendStartY, $legendW, $legendH);
+                $legend->draw($img, $legendStartv, $legendSizev);
             }
-            $chartWidth = 100;
-            $chartHeight = 100;
-            $chart->draw($this->img, $startX, $startY, $chartWidth, $chartHeight);
+            $chartSizev = new Vector2($this->width, $this->height);
+            $chart->draw($img, $chartStartv, $chartSizev);
         }
     }
 
     public function toBase64()
     {
-        $this->draw();
+        $startv = new Vector2(0, 0);
+        $sizev = new Vector2($this->width, $this->height);
+        $this->draw($this->img, $startv, $sizev);
         ob_start();
         \imagepng($this->img);
         $imgData = ob_get_clean();

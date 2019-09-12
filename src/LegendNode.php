@@ -2,9 +2,10 @@
 
 namespace Phlot;
 
+use Phlot\Math\Vector2;
 use Phrism\Color;
 
-class LegendNode
+class LegendNode implements Drawable
 {
     private $text;
     private $font;
@@ -19,14 +20,14 @@ class LegendNode
         $this->borderColor = $borderColor;
     }
 
-    public function draw($img, $startX, $startY, $width, $height)
+    public function draw($img, Vector2 $startv, Vector2 $sizev): void
     {
-        $endX = $startX + $width;
-        $endY = $startY + $height;
-        imagefilledrectangle($img, $startX, $startY, $endX, $endY, imagecolor($img, $this->bgColor));
-        imagerectangle($img, $startX, $startY, $endX, $endY, imagecolor($img, $this->borderColor));
+        $endv = Vector2::fromVector2($startv);
+        $endv->add($sizev);
+        imagefilledrectangle($img, $startv->x, $startv->y, $endv->x, $endv->y, imagecolor($img, $this->bgColor));
+        imagerectangle($img, $startv->x, $startv->y, $endv->x, $endv->y, imagecolor($img, $this->borderColor));
         $fontColor = imagecolor($img, $this->font->getColor());
         $fontSize = $this->font->getSize();
-        imagettftext($img, $fontSize, 0, $startX, $startY + $fontSize, $fontColor, $this->font->getFontFile(), $this->text);
+        imagettftext($img, $fontSize, 0, $startv->x, $startv->y + $fontSize, $fontColor, $this->font->getFontFile(), $this->text);
     }
 }

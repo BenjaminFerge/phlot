@@ -2,24 +2,21 @@
 
 namespace Phlot;
 
+use Phlot\Math\Vector2;
 use Phrism\Color;
 
-abstract class Chart
+abstract class Chart implements Drawable
 {
     protected $series;
-    protected $width;
-    protected $height;
     protected $defaultElemColor;
 
-    public function __construct(Series $series, $width, $height)
+    public function __construct(Series $series)
     {
         $this->series = $series;
-        $this->width = $width;
-        $this->height = $height;
         $this->defaultElemColor = new Color(200, 200, 200);
     }
 
-    abstract public function draw($img, int $startX, int $startY): void;
+    abstract public function draw($img, Vector2 $startv, Vector2 $sizev): void;
 
     /**
      * Get the value of series

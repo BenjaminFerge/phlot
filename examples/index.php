@@ -1,4 +1,4 @@
-<?php
+<pre><?php
 require __DIR__.'/../vendor/autoload.php';
 
 use Phlot\ChartArea;
@@ -24,12 +24,12 @@ $series->setLabels([
     'nyikhaj'
 ]);
 $chart = new PieChart($series, 300, 300);
-$chartArea = new ChartArea(300, 300);
-$chartArea->addChart($chart);
+$pieChartArea = new ChartArea(300, 300);
+$pieChartArea->addChart($chart);
 $color = new Color(100, 100, 240, 100);
-$chartArea->setBackgroundColor($color);
+$pieChartArea->setBackgroundColor($color);
 $titleFont = new Font('OpenSans', 16, 'Regular', new Color(0, 0, 0));
 $title = new Title("Title long long long long long long text", $titleFont);
-$chartArea->setTitle($title);
-$chartArea->displayLegend(true);
-echo $chartArea;
+$pieChartArea->setTitle($title);
+$pieChartArea->displayLegend(true);
+$pieChartArea->toHTML();

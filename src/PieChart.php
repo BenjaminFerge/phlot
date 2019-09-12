@@ -2,18 +2,20 @@
 
 namespace Phlot;
 
+use Phlot\Math\Vector2;
+
 class PieChart extends Chart
 {
-    public function draw($img, int $startX, int $startY): void
+    public function draw($img, Vector2 $startv, Vector2 $sizev): void
     {
         $imgW = imagesx($img);
         $imgH = imagesy($img);
         $white = imagecolorallocate($img, 0xFF, 0xFF, 0xFF);
         $black = imagecolorallocate($img, 0x00, 0x00, 0x00);
-        $rx = $this->width / 2;
-        $ry = $this->height / 2;
-        $centerX = $rx + $startX;
-        $centerY = $ry + $startY;
+        $rx = $sizev->x / 2;
+        $ry = $sizev->y / 2;
+        $centerX = $rx + $startv->x;
+        $centerY = $ry + $startv->y;
 
         $data = $this->series->getData();
         $total = array_sum($data);

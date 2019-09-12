@@ -19,5 +19,13 @@ abstract class Chart
         $this->defaultElemColor = new Color(200, 200, 200);
     }
 
-    abstract public function draw(int $idx, $img, int $startX, int $startY): void;
+    abstract public function draw($img, int $startX, int $startY): void;
+
+    /**
+     * Get the value of series
+     */ 
+    public function getSeries()
+    {
+        return $this->series;
+    }
 }

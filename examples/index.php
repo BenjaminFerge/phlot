@@ -16,9 +16,16 @@ $series->setColors([
     Color::random(),
     Color::random(),
 ]);
+$series->setLabels([
+    'alma',
+    'körte',
+    'kompót',
+    'befőtt',
+    'nyikhaj'
+]);
 $chart = new PieChart($series, 300, 300);
 $chartArea = new ChartArea(300, 300);
-$chartArea->addChart($chart, 0, 0);
+$chartArea->addChart($chart);
 $color = new Color(100, 100, 240, 100);
 $chartArea->setBackgroundColor($color);
 $titleFont = new Font(5, new Color(0, 0, 0));

@@ -4,7 +4,7 @@ namespace Phlot;
 
 class PieChart extends Chart
 {
-    public function draw(int $idx, $img, int $startX, int $startY): void
+    public function draw($img, int $startX, int $startY): void
     {
         $imgW = imagesx($img);
         $imgH = imagesy($img);

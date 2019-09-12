@@ -9,11 +9,13 @@ class Series
     private $name;
     private $data;
     private $colors = [];
+    private $labels = [];
 
-    public function __construct($name, $data, $colors = [])
+    public function __construct($name, $data, $labels = [], $colors = [])
     {
         $this->name = $name;
         $this->data = $data;
+        $this->labels = $labels;
         $this->colors = $colors;
     }
 
@@ -76,5 +78,25 @@ class Series
         for ($i = 0; $i < $this->getLength(); $i++) {
             $this->colors[$i] = Color::randomWithAlpha($alpha);
         }
+    }
+
+    /**
+     * Get the value of labels
+     */
+    public function getLabels()
+    {
+        return $this->labels;
+    }
+
+    /**
+     * Set the value of labels
+     *
+     * @return  self
+     */
+    public function setLabels($labels)
+    {
+        assert($this->getLength() === count($labels));
+        $this->labels = $labels;
+        return $this;
     }
 }

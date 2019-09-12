@@ -2,11 +2,12 @@
 
 namespace Phlot;
 
-class Legend implements Drawable
+use Phrism\Color;
+
+class Legend
 {
     private $nodes;
     private $font;
-    private $display;
 
     public function __construct($nodes = [], Font $font = null)
     {
@@ -14,20 +15,19 @@ class Legend implements Drawable
         $this->font = $font;
     }
     
-    public function draw($img): void
+    public function draw($img, int $startX, int $startY, int $width, int $height): void
     {
-        if (!$this->display) {
-            return;
+        $legendBg = imagecolor($img, new Color(200, 200, 200));
+        $legendBorder = imagecolor($img, new Color(125, 125, 125));
+        $endX = $startX + $width;
+        $endY = $startY + $height;
+        imagefilledrectangle($img, $startX, $startY, $endX, $endY, $legendBg);
+        imagerectangle($img, $startX, $startY, $endX, $endY, $legendBorder);
+        $nStartX = $startX;
+        $nStartY = $startY;
+        foreach ($this->nodes as $n) {
+            $n->draw($img, $nStartX, $nStartY, 50, 20);
+            $nStartY += 20;
         }
-    }
-
-    public function show()
-    {
-        $this->display = true;
-    }
-
-    public function hide()
-    {
-        $this->display = false;
     }
 }

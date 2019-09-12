@@ -12,7 +12,13 @@ class ChartArea
     private $img;
     private $bgColor;
     private $title;
-    private $legend;
+    private $displayLegend = true;
+    private $legendPadding = 50;
+    private $legendPosition = self::LEGEND_POSITION_RIGHT;
+    const LEGEND_POSITION_LEFT = 0;
+    const LEGEND_POSITION_RIGHT = 1;
+    const LEGEND_POSITION_UP = 2;
+    const LEGEND_POSITION_DOWN = 3;
 
     public function __construct($width = 200, $height = 200)
     {
@@ -20,37 +26,79 @@ class ChartArea
         $this->width = $width;
         $this->height = $height;
         $this->bgColor = new Color(255, 255, 255);
-        $this->legend = new Legend();
     }
 
     public function displayLegend(bool $show)
     {
-        if ($show) {
-            $this->legend->show();
-        } else {
-            $this->legend->hide();
-        }
+        $this->displayLegend = $show;
     }
     
-    public function addChart(Chart $chart, int $startX, int $startY)
+    public function addChart(Chart $chart)
     {
-        $this->charts[] = compact('chart', 'startX', 'startY');
+        $this->charts[] = $chart;
     }
 
     public function draw(): void
     {
+        $imgW = imagesx($this->img);
+        $imgH = imagesy($this->img);
+        $imgWCenter = $imgW / 2;
+        $imgHCenter = $imgH / 2;
         $bg = imagecolor($this->img, $this->bgColor);
         imagefill($this->img, 0, 0, $bg);
-        if ($this->displayLegend) {
-            $legendBg = imagecolor($this->img, new Color(100, 100, 100));
-            imagerectangle($this->img, 50, 50, 100, 100, $legendBg);
-        }
+
         if ($this->title) {
             $this->title->draw($this->img);
         }
         for ($i = 0; $i < count($this->charts); $i++) {
-            extract($this->charts[$i]);
-            $chart->draw($i, $this->img, $startX, $startY);
+            $chart = $this->charts[$i];
+            $startX = 0;
+            $startY = 0;
+            if ($this->displayLegend) {
+                $legendStartX = $startX;
+                $legendStartY = $startY;
+                $legendW = 100;
+                $legendH = 100;
+                switch ($this->legendPosition) {
+                    case self::LEGEND_POSITION_RIGHT:
+                        default_legend_position:
+                        $startX -= $this->legendPadding;
+                        $legendStartX += $this->legendPadding + $imgWCenter;
+                        break;
+                    case self::LEGEND_POSITION_LEFT:
+                        $startX += $this->legendPadding;
+                        $legendStartX -= ($this->legendPadding - $imgWCenter + $legendW);
+                        break;
+                    case self::LEGEND_POSITION_UP:
+                        // TODO
+                        $startY += $this->legendPadding;
+                        $legendStartY -= $this->legendPadding;
+                        break;
+                    case self::LEGEND_POSITION_DOWN:
+                        // TODO
+                        $startY -= $this->legendPadding;
+                        $legendStartY += $this->legendPadding;
+                        break;
+                    default:
+                        trigger_error(
+                            "Invalid legendPosition parameter ({$this->legendPosition}). 
+                            Using LEGEND_POSITION_RIGHT\n",
+                            E_USER_WARNING
+                        );
+                        goto default_legend_position;
+                }
+                $legendFont = new Font(2, new Color(0, 0, 0));
+                $series = $chart->getSeries();
+                $legendNodes = array_map(function ($label, $color) use ($legendFont) {
+                    return new LegendNode($label, $legendFont, $color, new Color(0, 0, 0));
+                }, $series->getLabels(), $series->getColors());
+
+                $legend = new Legend($legendNodes, $legendFont);
+                $legend->draw($this->img, $legendStartX, $legendStartY, $legendW, $legendH);
+            }
+            $chartWidth = 100;
+            $chartHeight = 100;
+            $chart->draw($this->img, $startX, $startY, $chartWidth, $chartHeight);
         }
     }
 

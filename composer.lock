@@ -1,0 +1,53 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "14bc7ff4309787423d50d23b63c436b1",
+    "packages": [
+        {
+            "name": "benjaminferge/phrism",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BenjaminFerge/phrism.git",
+                "reference": "1647f4a6c4a88c548cce9e5d333b53e170c299c7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BenjaminFerge/phrism/zipball/1647f4a6c4a88c548cce9e5d333b53e170c299c7",
+                "reference": "1647f4a6c4a88c548cce9e5d333b53e170c299c7",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phrism\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Benjámin J. Ferge",
+                    "email": "benjamin.ferge17@gmail.com"
+                }
+            ],
+            "description": "PHP library for dealing with colors.",
+            "time": "2019-09-12T08:39:09+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "benjaminferge/phrism": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

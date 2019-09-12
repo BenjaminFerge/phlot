@@ -9,7 +9,9 @@
             "email": "benjamin.ferge17@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "benjaminferge/phrism": "dev-master"
+    },
     "autoload": {
         "psr-4": {
             "Phlot\\": "src/"

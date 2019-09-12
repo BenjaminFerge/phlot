@@ -24,4 +24,5 @@ $chartArea->setBackgroundColor($color);
 $titleFont = new Font(5, new Color(0, 0, 0));
 $title = new Title("Title\nnew line\ttab", $titleFont);
 $chartArea->setTitle($title);
+$chartArea->displayLegend(true);
 echo $chartArea;

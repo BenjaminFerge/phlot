@@ -12,6 +12,7 @@ class ChartArea
     private $img;
     private $bgColor;
     private $title;
+    private $legend;
 
     public function __construct($width = 200, $height = 200)
     {
@@ -19,8 +20,18 @@ class ChartArea
         $this->width = $width;
         $this->height = $height;
         $this->bgColor = new Color(255, 255, 255);
+        $this->legend = new Legend();
     }
 
+    public function displayLegend(bool $show)
+    {
+        if ($show) {
+            $this->legend->show();
+        } else {
+            $this->legend->hide();
+        }
+    }
+    
     public function addChart(Chart $chart, int $startX, int $startY)
     {
         $this->charts[] = compact('chart', 'startX', 'startY');
@@ -30,6 +41,10 @@ class ChartArea
     {
         $bg = imagecolor($this->img, $this->bgColor);
         imagefill($this->img, 0, 0, $bg);
+        if ($this->displayLegend) {
+            $legendBg = imagecolor($this->img, new Color(100, 100, 100));
+            imagerectangle($this->img, 50, 50, 100, 100, $legendBg);
+        }
         if ($this->title) {
             $this->title->draw($this->img);
         }

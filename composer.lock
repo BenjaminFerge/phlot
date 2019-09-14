@@ -12,19 +12,22 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/BenjaminFerge/phrism.git",
-                "reference": "f04fdca6247dc4101b15afd0f8220f5f9bc2e43a"
+                "reference": "2ab26e1bc098d079cbede534d8b3d24cc195621e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BenjaminFerge/phrism/zipball/f04fdca6247dc4101b15afd0f8220f5f9bc2e43a",
-                "reference": "f04fdca6247dc4101b15afd0f8220f5f9bc2e43a",
+                "url": "https://api.github.com/repos/BenjaminFerge/phrism/zipball/2ab26e1bc098d079cbede534d8b3d24cc195621e",
+                "reference": "2ab26e1bc098d079cbede534d8b3d24cc195621e",
                 "shasum": ""
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "Phrism\\": "src/"
-                }
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -37,7 +40,7 @@
                 }
             ],
             "description": "PHP library for dealing with colors.",
-            "time": "2019-09-12T12:07:02+00:00"
+            "time": "2019-09-13T14:25:50+00:00"
         }
     ],
     "packages-dev": [],

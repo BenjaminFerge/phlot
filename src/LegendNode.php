@@ -20,10 +20,11 @@ class LegendNode implements Drawable
         $this->borderColor = $borderColor;
     }
 
-    public function draw($img, Vector2 $startv, Vector2 $sizev): void
+    public function draw($img, Vector2 $startv, Vector2 $maxSize): void
     {
         $endv = Vector2::fromVector2($startv);
-        $endv->add($sizev);
+        $endv->x += $maxSize->x;
+        $endv->y += $maxSize->y;
         imagefilledrectangle($img, $startv->x, $startv->y, $endv->x, $endv->y, imagecolor($img, $this->bgColor));
         imagerectangle($img, $startv->x, $startv->y, $endv->x, $endv->y, imagecolor($img, $this->borderColor));
         $fontColor = imagecolor($img, $this->font->getColor());

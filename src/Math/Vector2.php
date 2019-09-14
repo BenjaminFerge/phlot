@@ -24,10 +24,22 @@ class Vector2
         $this->y *= $vec->y;
     }
 
+    public function mulScalar(int $n)
+    {
+        $this->x *= $n;
+        $this->y *= $n;
+    }
+
     public function div(Vector2 $vec)
     {
         $this->x /= $vec->x;
         $this->y /= $vec->y;
+    }
+
+    public function divScalar(int $n)
+    {
+        $this->x /= $n;
+        $this->y /= $n;
     }
 
     public function add(Vector2 $vec)
@@ -36,9 +48,21 @@ class Vector2
         $this->y += $vec->y;
     }
 
+    public function addScalar(int $n)
+    {
+        $this->x += $n;
+        $this->y += $n;
+    }
+
     public function sub(Vector2 $vec)
     {
         $this->x -= $vec->x;
         $this->y -= $vec->y;
+    }
+
+    public function normalize()
+    {
+        $this->x = 1 / $this->x;
+        $this->y = 1 / $this->y;
     }
 }

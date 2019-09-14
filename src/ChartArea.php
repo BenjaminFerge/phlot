@@ -47,7 +47,7 @@ class ChartArea
         $this->charts[] = $chart;
     }
 
-    public function draw($img, Vector2 $startv, Vector2 $sizev): void
+    public function draw($img, Vector2 $startv, Vector2 $maxSize): void
     {
         $imgW = imagesx($img);
         $imgH = imagesy($img);
@@ -64,7 +64,9 @@ class ChartArea
             $chartStartv = new Vector2(0, 0);
             if ($this->displayLegend) {
                 $legendStartv = Vector2::fromVector2($startv);
-                $legendSizev = new Vector2(100, 100);
+                $legendMaxSize = Vector2::fromVector2($legendStartv);
+                $legendMaxSize->y += $imgH;
+                $legendMaxSize->x += $imgW;
                 switch ($this->legendPosition) {
                     case self::LEGEND_POSITION_RIGHT:
                         default_legend_position:
@@ -100,18 +102,18 @@ class ChartArea
                 }, $series->getLabels(), $series->getColors());
 
                 $legend = new Legend($legendNodes, $legendFont);
-                $legend->draw($img, $legendStartv, $legendSizev);
+                $legend->draw($img, $legendStartv, $legendMaxSize);
             }
-            $chartSizev = new Vector2($this->width, $this->height);
-            $chart->draw($img, $chartStartv, $chartSizev);
+            $chart->draw($img, $chartStartv, $maxSize);
         }
     }
 
     public function toBase64()
     {
         $startv = new Vector2(0, 0);
-        $sizev = new Vector2($this->width, $this->height);
-        $this->draw($this->img, $startv, $sizev);
+        // $sizev = new Vector2($this->width, $this->height);
+        $maxSize = new Vector2($this->width, $this->height);
+        $this->draw($this->img, $startv, $maxSize);
         ob_start();
         \imagepng($this->img);
         $imgData = ob_get_clean();

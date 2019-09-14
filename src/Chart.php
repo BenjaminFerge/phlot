@@ -16,7 +16,7 @@ abstract class Chart implements Drawable
         $this->defaultElemColor = new Color(200, 200, 200);
     }
 
-    abstract public function draw($img, Vector2 $startv, Vector2 $sizev): void;
+    abstract public function draw($img, Vector2 $startv, Vector2 $maxSize): void;
 
     /**
      * Get the value of series

@@ -3,19 +3,18 @@
 namespace Phlot;
 
 use Phlot\Math\Vector2;
+use Phrism\Color;
 
 class PieChart extends Chart
 {
-    public function draw($img, Vector2 $startv, Vector2 $sizev): void
+    public function draw($img, Vector2 $startv, Vector2 $maxSize): void
     {
         $imgW = imagesx($img);
         $imgH = imagesy($img);
-        $white = imagecolorallocate($img, 0xFF, 0xFF, 0xFF);
-        $black = imagecolorallocate($img, 0x00, 0x00, 0x00);
-        $rx = $sizev->x / 2;
-        $ry = $sizev->y / 2;
-        $centerX = $rx + $startv->x;
-        $centerY = $ry + $startv->y;
+        $white = imagecolor($img, new Color(255, 255, 255));
+        $halfW = $imgW / 2;
+        $halfH = $imgH / 2;
+        $center = new Vector2($halfW + $startv->x, $halfH + $startv->y);
 
         $data = $this->series->getData();
         $total = array_sum($data);
@@ -32,10 +31,10 @@ class PieChart extends Chart
             $endAngle = 360 * $val + $startAngle;
             imagefilledarc(
                 $img,
-                $centerX,
-                $centerY,
-                $rx,
-                $ry,
+                $center->x,
+                $center->y,
+                $halfW,
+                $halfH,
                 $startAngle,
                 $endAngle,
                 $color,
@@ -43,16 +42,16 @@ class PieChart extends Chart
             );
 
             // Border of element
-            imagearc($img, $centerX, $centerY, $rx, $ry, $startAngle, $endAngle, $white);
+            imagearc($img, $center->x, $center->y, $halfW, $halfH, $startAngle, $endAngle, $white);
             $startRad = deg2rad($startAngle);
             $endRad = deg2rad($endAngle);
-            $r = $rx / 2;
-            $x1 = $r * cos($startRad) + $centerX;
-            $y1 = $r * sin($startRad) + $centerY;
-            $x2 = $r * cos($endRad) + $centerX;
-            $y2 = $r * sin($endRad) + $centerY;
-            imageline($img, $centerX, $centerY, $x1, $y1, $white);
-            imageline($img, $centerX, $centerY, $x2, $y2, $white);
+            $r = $halfW / 2;
+            $x1 = $r * cos($startRad) + $center->x;
+            $y1 = $r * sin($startRad) + $center->y;
+            $x2 = $r * cos($endRad) + $center->x;
+            $y2 = $r * sin($endRad) + $center->y;
+            imageline($img, $center->x, $center->y, $x1, $y1, $white);
+            imageline($img, $center->x, $center->y, $x2, $y2, $white);
             //---------------------------—---------------------------—---------
             
             $startAngle = $endAngle;

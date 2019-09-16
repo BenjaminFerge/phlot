@@ -22,6 +22,8 @@ class LegendNode implements Drawable
 
     public function draw($img, Vector2 $startv, Vector2 $maxSize): void
     {
+        $imgW = imagesx($img);
+        $imgH = imagesy($img);
         $endv = Vector2::fromVector2($startv);
         $endv->x += $maxSize->x;
         $endv->y += $maxSize->y;

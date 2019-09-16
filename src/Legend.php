@@ -18,25 +18,27 @@ class Legend implements Drawable
     
     public function draw($img, Vector2 $startv, Vector2 $maxSize): void
     {
+        $maxSize->x -= 1;
         $legendBg = imagecolor($img, new Color(200, 200, 200));
         $legendBorder = imagecolor($img, new Color(125, 125, 125));
-        $end = Vector2::fromVector2($startv);
         $nodec = count($this->nodes);
-        $nodeDiv = 15;
-        $nodePadding = 10;
-        $nMaxSize = Vector2::fromVector2($startv);
-        $nMaxSize->divScalar($nodeDiv);
-        $end->y += $nodec * ($nMaxSize->y + $nodePadding);
-        $end->x += $nMaxSize->x / 3;
+        $nPaddingX = 5;
+        $nodeSize = Vector2::fromVector2($maxSize);
+        $nodeSize->y = $maxSize->y / $nodec;
+        $nodeSize->x -= $nPaddingX * 2;
+        $nPaddingY = 10;
+
+        $endLegend = Vector2::fromVector2($startv);
+        $endLegend->add($maxSize);
         
-        imagefilledrectangle($img, $startv->x, $startv->y, $end->x, $end->y, $legendBg);
-        imagerectangle($img, $startv->x, $startv->y, $end->x, $end->y, $legendBorder);
+        imagefilledrectangle($img, $startv->x, $startv->y, $endLegend->x, $endLegend->y, $legendBg);
+        imagerectangle($img, $startv->x, $startv->y, $endLegend->x, $endLegend->y, $legendBorder);
         $nStartv = Vector2::fromVector2($startv);
-        $nStartv->y += $nodePadding / 2;
-        $nStartv->x += 5;
+        $nStartv->y += $nPaddingY / 2;
+        $nStartv->x += $nPaddingX;
         foreach ($this->nodes as $n) {
-            $n->draw($img, $nStartv, $nMaxSize);
-            $nStartv->y += $nMaxSize->y + $nodePadding;
+            $n->draw($img, $nStartv, $nodeSize);
+            $nStartv->y += $nodeSize->y + $nPaddingY;
         }
     }
 }

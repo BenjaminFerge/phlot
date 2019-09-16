@@ -62,11 +62,10 @@ class ChartArea
         for ($i = 0; $i < count($this->charts); $i++) {
             $chart = $this->charts[$i];
             $chartStartv = new Vector2(0, 0);
+            $legendStartv = Vector2::fromVector2($startv);
+            $legendMaxSize = Vector2::fromVector2($maxSize);
+
             if ($this->displayLegend) {
-                $legendStartv = Vector2::fromVector2($startv);
-                $legendMaxSize = Vector2::fromVector2($legendStartv);
-                $legendMaxSize->y += $imgH;
-                $legendMaxSize->x += $imgW;
                 switch ($this->legendPosition) {
                     case self::LEGEND_POSITION_RIGHT:
                         default_legend_position:
@@ -75,7 +74,7 @@ class ChartArea
                         break;
                     case self::LEGEND_POSITION_LEFT:
                         $chartStartv->x += $this->legendPadding;
-                        $legendStartv->x -= ($this->legendPadding - $imgWCenter + $legendSizev->x);
+                        $legendStartv->x -= ($this->legendPadding - $imgWCenter + $legendMaxSize->x);
                         break;
                     case self::LEGEND_POSITION_UP:
                         // TODO
@@ -100,6 +99,8 @@ class ChartArea
                 $legendNodes = array_map(function ($label, $color) use ($legendFont) {
                     return new LegendNode($label, $legendFont, $color, new Color(0, 0, 0));
                 }, $series->getLabels(), $series->getColors());
+
+                $legendMaxSize->sub($legendStartv);
 
                 $legend = new Legend($legendNodes, $legendFont);
                 $legend->draw($img, $legendStartv, $legendMaxSize);
